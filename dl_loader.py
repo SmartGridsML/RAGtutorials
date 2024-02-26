@@ -9,7 +9,6 @@ import chromadb
 from langchain_community.vectorstores import Chroma
 
 
-OPEN_AI_API_KEY = "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"
 PATH = "data"
 CHROMA_PATH = "chroma"
 def load_documents():
