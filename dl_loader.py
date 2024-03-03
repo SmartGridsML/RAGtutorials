@@ -41,11 +41,29 @@ def save_to_chroma(chunks: list[Document]):
     db.persist()
     print(f"Saved {len(chunks)} chunks ot {CHROMA_PATH}")
 
+
+def load_documents():
+    loader = DirectoryLoader(PATH, glob="*.md")
+    documents = loader.load()
+    return documents
+
+
 embedding_function = OpenAIEmbeddings()
 db = Chroma(persist_directory = CHROMA_PATH , embedding_function= embedding_function)
 
-#results = db.similarity_search_with_relevance_scores(query_text , k=3)
+
+def main():
+    generate_data_store()
+
+
+def generate_data_store():
+    documents = load_documents()
+    chunks = split_text(documents)
+    save_to_chroma(chunks)
+
+
+# results = db.similarity_search_with_relevance_scores(query_text , k=3)
 
 # chroma_client = chromadb.Client()
-#if __name__ == "__main__":
-    #main
+if __name__ == "__main__":
+    main()
